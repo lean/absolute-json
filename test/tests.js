@@ -3,56 +3,56 @@ var expect = chai.expect,
 
 describe('Initialization', function() {
 	
-	var i18np = window.i18np;
+	var ajson = window.ajson;
     
     it('should be exist', function() {
-		expect(i18np).to.exist;
-		expect(i18np.init).to.exist;
+		expect(ajson).to.exist;
+		expect(ajson.init).to.exist;
 	});
 
     it('expect a resource url for json', function() {
-		expect(i18np.options.localeUrl).to.be.a("string");
+		expect(ajson.options.localeUrl).to.be.a("string");
 	});
 
  	it('should load a json', function() {
-		expect(i18np.options.localeObject).to.be.a("object").to.not.be.empty;
+		expect(ajson.options.localeObject).to.be.a("object").to.not.be.empty;
 	});
 
 });
 
 describe('Keys', function() {
 	
-	var i18np = window.i18np;
+	var ajson = window.ajson;
     
 	it('expect a getter function', function() {
-		expect(i18np.get).to.exist;
+		expect(ajson.get).to.exist;
 	});
 
 	it('expect a value for a given key', function() {
-		expect(i18np.get("google")).to.equal("http://www.google.com");
+		expect(ajson.get("google")).to.equal("http://www.google.com");
 	});
 
 	it('expect an undefined value for an not existing key', function() {
-		expect(i18np.get("xswq23d")).to.be.undefined;
+		expect(ajson.get("xswq23d")).to.be.undefined;
 	});
 
 });
 
 describe('DOM manipulation', function () {
 	
-	var i18np = window.i18np;
+	var ajson = window.ajson;
 
 	it ("should be a method of jQuery", function () {
-		expect($.i18np).to.exist;
+		expect($.ajson).to.exist;
 	});
 
 	it ("should be translated all the body", function () {
-		$("body").i18np();
+		$("body").ajson();
 		expect($(".linkGitHub").html()).to.equal("Explore GitHub");
 	})
 
 	it ("should be translated all the attr", function () {
-		$("body").i18np();
+		$("body").ajson();
 		expect($(".linkGitHub").attr("href")).to.equal("https://github.com/explore");
 	})
 
