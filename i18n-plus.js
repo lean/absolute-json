@@ -3,7 +3,7 @@
 	var root = this,
 		$ = root.jQuery,
 		_ = root._,
-		i18np = {};
+		ajson = {};
 
 	// defaults
 	var options = {
@@ -13,16 +13,16 @@
 	}
 
 	// Export the i18next object for **CommonJS**. 
-	// If we're not in CommonJS, add `i18np` to the
+	// If we're not in CommonJS, add `ajson` to the
 	// global object or to jquery.
 	if ( typeof module !== 'undefined' && module.exports ) {
-		module.exports = i18np;
+		module.exports = ajson;
 	} else {
 		if($) {
-			$.i18np = $.i18np || i18np;
+			$.ajson = $.ajson || ajson;
 		}
 
-		root.i18np = root.i18np || i18np;
+		root.ajson = root.ajson || ajson;
 	}
 
 	function init(opt, callback) {
@@ -34,10 +34,10 @@
 			url:opt.localeUrl
 		}, callback );
 
-		$.fn.i18np = function (options) {
+		$.fn.ajson = function (options) {
 
 				// localize childs
-				var elements = $(this).find('[data-i18np]');
+				var elements = $(this).find('[data-ajson]');
 
 				elements.each( function () { 
 					localize($(this), options);
@@ -76,7 +76,7 @@
 
 	function localize ( el, opt ) {
 
-		var elKey = el.attr("data-i18np"),
+		var elKey = el.attr("data-ajson"),
 			k = get(elKey);
 
 				
@@ -105,8 +105,8 @@
 	}
 
 	// public api interface
-	i18np.init = init;
-	i18np.options = options;
-	i18np.get = get;
+	ajson.init = init;
+	ajson.options = options;
+	ajson.get = get;
 
 })();

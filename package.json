@@ -1,6 +1,6 @@
 {
-  "name": "i18n-plus",
-  "description": "Total localization",
+  "name": "absolute-json",
+  "description": "A complete tool to maintain all the front-end through a json",
   "version": "0.0.1",
   "author": "Leandro Cabrera",
   "engines": {
