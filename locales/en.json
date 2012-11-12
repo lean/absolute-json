@@ -1,0 +1,9 @@
+{   
+	"namespaceSeparator" : "_",
+	"github" :  "Explore GitHub",
+	"github_href" : "https://github.com/explore",
+	"google" : "http://www.google.com",
+	"logo_src" : "http://underscorejs.org/docs/images/underscore.png",
+	"node" : "Node.js is a platform built on Chrome's JavaScript runtime",
+	"node_href" : "http://nodejs.org/"
+}
