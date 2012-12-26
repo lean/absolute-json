@@ -3,57 +3,59 @@ var expect = chai.expect,
 
 describe('Initialization', function() {
 	
-	var ajson = window.ajson;
+	var abjson = window.abjson;
     
     it('should be exist', function() {
-		expect(ajson).to.exist;
-		expect(ajson.init).to.exist;
+		expect(abjson).to.exist;
+		expect(abjson.init).to.exist;
 	});
 
     it('expect a resource url for json', function() {
-		expect(ajson.options.localeUrl).to.be.a("string");
+		expect(abjson.options.localeUrl).to.be.a("string");
 	});
 
  	it('should load a json', function() {
-		expect(ajson.options.localeObject).to.be.a("object").to.not.be.empty;
+		expect(abjson.options.localeObject).to.be.a("object").to.not.be.empty;
 	});
 
 });
 
 describe('Keys', function() {
 	
-	var ajson = window.ajson;
+	var abjson = window.abjson;
     
 	it('expect a getter function', function() {
-		expect(ajson.get).to.exist;
+		expect(abjson.get).to.exist;
 	});
 
 	it('expect a value for a given key', function() {
-		expect(ajson.get("google")).to.equal("http://www.google.com");
+		expect(abjson.get("google")).to.equal("http://www.google.com");
 	});
 
 	it('expect an undefined value for an not existing key', function() {
-		expect(ajson.get("xswq23d")).to.be.undefined;
+		expect(abjson.get("xswq23d")).to.be.undefined;
 	});
 
 });
 
 describe('DOM manipulation', function () {
 	
-	var ajson = window.ajson;
+	var abjson = window.abjson;
 
 	it ("should be a method of jQuery", function () {
-		expect($.ajson).to.exist;
+		expect($.abjson).to.exist;
 	});
 
 	it ("should be translated all the body", function () {
-		$("body").ajson();
+		$("body").abjson();
 		expect($(".linkGitHub").html()).to.equal("Explore GitHub");
 	})
 
 	it ("should be translated all the attr", function () {
-		$("body").ajson();
+		$("body").abjson();
 		expect($(".linkGitHub").attr("href")).to.equal("https://github.com/explore");
 	})
 
 })
+
+console.log(abjson.get("traka"));

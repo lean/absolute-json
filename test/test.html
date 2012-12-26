@@ -7,15 +7,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="http://chaijs.com/chai.js"></script>
 	<script src="mocha.js"></script>
-	<script src="../i18n-plus.js"></script>
+	<script src="../absolute-json.js"></script>
 	<script> 
 		mocha.setup('bdd');
 	</script>
 	<script src="utils.js"></script>
 	<script src="tests.js"></script>
 	<script>
-		var customFormater = function(data){
-			var namespaceSeparator = data.namespaceSeparator,
+		var customFormater = function( data ) {
+			var namespaceSeparator = "_",
 					formatedObject = {}, 
 					objKeys = [], 
 					keys = _.keys(data), k;
@@ -55,27 +55,28 @@
 				return formatedObject;
 		}
 		window.onload = function() {
-			ajson.init({ 
+			abjson.init({ 
 				localeUrl : "../locales/en.json",
 				customJsonParser : customFormater
 			}, function(){
 				mocha.run()
-			});
-			
+			});	
 		};
 	</script>
 </head>
 <body>
-	  <div id="mocha"></div>
-	  
-	  <div class="translate" style="display:block">
-	  	
-	  	<a class="linkGitHub" data-ajson="github" href=""></a>
-	  	
-	  	<span data-ajson="google"></span>
-	  	
-	  	<img src="" alt="" data-ajson="logo">
+	<div id="mocha"></div>
 
-	  </div>
+	<div class="translate" style="display:block">
+
+		<a class="linkGitHub" data-abjson="github" href=""></a>
+
+		<span data-abjson="googlesdfsdf"></span>
+
+		<img src="" alt="" data-abjson="logo">
+
+		<span class="points" data-abjson="points" data-abjson-r="14|5"></span>
+
+	</div>
 </body>
 </html>
