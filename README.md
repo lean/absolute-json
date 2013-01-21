@@ -6,7 +6,7 @@ A complete tool to maintain all the front-end through a json. You can manipulate
 * Easy to maintain
 * The best way to work with i18n files
 * Fast startup, lightweight
-* Loading asynchronous json files
+* Dynamic loading json files
 * Errors and warnings
 
 ## Examples
@@ -30,7 +30,6 @@ becomes
 <h3 data-abjson='title'>GitHub</h3>
 <p data-abjson='text'>GitHub · Build software better, together.</p>
 ```
-
 
 
 #####Bind html attributes
@@ -97,3 +96,6 @@ abjson.init({
       $(body).abjson();
     });
 ```
+## Methods
+###abjson.init (options, callback)
+load the resource file and init the library. 
