@@ -3,66 +3,7 @@
 	<meta charset="utf-8">
 	<title>Mocha Tests</title>
 	<link rel="stylesheet" href="mocha.css" />
-	<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script src="http://chaijs.com/chai.js"></script>
-	<script src="mocha.js"></script>
-	<script src="../absolute-json.js"></script>
-	<script> 
-		mocha.setup('bdd');
-	</script>
-	<script src="utils.js"></script>
-	<script src="tests.js"></script>
-	<script>
-		var customFormater = function( data ) {
-			var namespaceSeparator = "_",
-					formatedObject = {}, 
-					objKeys = [], 
-					keys = _.keys(data), k;
 
-				if(namespaceSeparator){
-
-					objKeys = _.filter(keys, function(n){
-						return n.indexOf(namespaceSeparator) > -1;
-					});
-
-					_.each( objKeys, function ( val, key ) {
-						
-						objKeys[key] = val.slice( 0, val.indexOf(namespaceSeparator) );
-						
-						formatedObject[objKeys[key]] = {};
-
-						if( data[objKeys[key]] ){
-							formatedObject[objKeys[key]].text = data[ objKeys[key] ] ;
-							delete data[ objKeys[key] ];
-						}
-
-
-					});
-
-					_.each( data, function ( val, key ) {
-						k = key.split(namespaceSeparator);
-						
-						if( k[1] ){
-							formatedObject[ k[0] ][ k[1] ] = val;
-						}else{
-							formatedObject[key] = val;
-						}
-					});
-
-				}
-
-				return formatedObject;
-		}
-		window.onload = function() {
-			abjson.init({ 
-				localeUrl : "../locales/en.json",
-				customJsonParser : customFormater
-			}, function(){
-				mocha.run()
-			});	
-		};
-	</script>
 </head>
 <body>
 	<div id="mocha"></div>
@@ -71,12 +12,34 @@
 
 		<a class="linkGitHub" data-abjson="github" href=""></a>
 
-		<span data-abjson="googlesdfsdf"></span>
+		<span data-abjson="google"></span>
 
 		<img src="" alt="" data-abjson="logo">
 
 		<span class="points" data-abjson="points" data-abjson-r="14|5"></span>
 
 	</div>
+
+
 </body>
+
+<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://chaijs.com/chai.js"></script>
+<script src="mocha.js"></script>
+<script src="../absolute-json.js"></script>
+<script> 
+	mocha.setup('bdd');
+</script>
+<script src="utils.js"></script>
+<script src="tests.js"></script>
+<script>
+	window.onload = function() {
+		abjson.load({ 
+			sourceUrl : "../locales/en.json"
+		}, function(){
+			mocha.run()
+		});	
+	};
+</script>
 </html>

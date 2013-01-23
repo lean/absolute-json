@@ -1,5 +1,4 @@
-var expect = chai.expect,
-	should = chai.should();
+var expect = chai.expect;
 
 describe('Initialization', function() {
 	
@@ -7,11 +6,10 @@ describe('Initialization', function() {
     
     it('should be exist', function() {
 		expect(abjson).to.exist;
-		expect(abjson.init).to.exist;
 	});
 
     it('expect a resource url for json', function() {
-		expect(abjson.options.localeUrl).to.be.a("string");
+		expect(abjson.options.sourceUrl).to.be.a("string");
 	});
 
  	it('should load a json', function() {
@@ -32,7 +30,7 @@ describe('Keys', function() {
 		expect(abjson.get("google")).to.equal("http://www.google.com");
 	});
 
-	it('expect an undefined value for an not existing key', function() {
+	it('expect an undefined value for an non existing key', function() {
 		expect(abjson.get("xswq23d")).to.be.undefined;
 	});
 
@@ -57,5 +55,3 @@ describe('DOM manipulation', function () {
 	})
 
 })
-
-console.log(abjson.get("traka"));

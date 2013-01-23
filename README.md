@@ -3,10 +3,11 @@
 
 A complete tool to maintain all the front-end through a json. You can manipulate all text and HTML attributes automatically.
 
-* Easy to maintain
-* The best way to work with i18n files
-* Fast startup, lightweight
+* The best way to work with config files
+* Use it as localization library
 * Dynamic loading json files
+* Fast startup, lightweight
+* Easy to maintain
 * Errors and warnings
 
 ## Examples
@@ -99,3 +100,8 @@ abjson.init({
 ## Methods
 ###abjson.init (options, callback)
 load the resource file and init the library. 
+
+
+
+#changelog:
+###0.1 

@@ -1,13 +1,9 @@
 /*
 absolute-json
-version 0.0.5
+version 0.1
 author: Leandro Cabrera
 https://github.com/lean/absolute-json
 Licensed under the MIT license.
- 
-changelog:
-0.0.5 add cache false
-
 */
 (function () {
 
@@ -18,47 +14,31 @@ changelog:
 
 	// defaults
 	var options = {
-		localeUrl: "",
+		sourceUrl: "",
 		localeObject: {},
 		customJsonParser : null
 	}
 
-	// Export the abjson object for **CommonJS**. 
-	// If we're not in CommonJS, add 'abjson' to the
-	// global object or to jquery.
-	if ( typeof module !== 'undefined' && module.exports ) {
-		module.exports = abjson;
-	} else {
-		if($) {
-			$.abjson = $.abjson || abjson;
-		}
-
-		root.abjson = root.abjson || abjson;
+	function abjError ( name, message ) {
+		this.name = name;
+		this.message = message || "error";
 	}
 
-	function init( opt, callback ) {
+	abjError.prototype = new Error();
+	abjError.prototype.constructor = abjError;
+
+	function load ( opt, callback ) {
 		
-		options.localeUrl = opt.localeUrl;
+		options.sourceUrl = opt.sourceUrl;
 		options.customJsonParser = opt.customJsonParser;
 
-		loadResource({
-			url:opt.localeUrl
+		loadSource({
+			url:opt.sourceUrl
 		}, callback );
-
-		$.fn.abjson = function ( options ) {
-
-			// localize childs
-			var elements = $(this).find( '[data-abjson]' );
-
-			elements.each( function () { 
-				localize( $(this), options );
-			});
-
-		};
 
 	}
 
-	function loadResource( opt, callback ) {
+	function loadSource ( opt, callback ) {
 
 		$.ajax({
 			url: opt.url,
@@ -74,43 +54,34 @@ changelog:
 			},
 			error: function ( xhr, textStatus ) {
 				callback();
-				throw textStatus.toUpperCase() + ": " + xhr.statusText;
+
+				throw new abjError(textStatus.toUpperCase(), xhr.statusText);
 
 			}
 		});
 	}
 
 	function get ( key ) {
-		try{
-			if (key === " ") {
-				return "";
-			}else if( options.localeObject[key] ) {
-				return options.localeObject[key];
-			} else {
-				throw "KEY " + key + " NOT FOUND";
-			}
-			
-		}catch(err){
-				console.error(err);
-		}
+	
+		return options.localeObject[key] ? options.localeObject[key] : undefined;
 
 	}
 
-	function localize ( el, opt ) {
+	function updateElements ( el, opt ) {
 
 		var elKey = el.attr( "data-abjson" ),
-			localizedText = get( elKey );
+			updateElementsdText = get( elKey );
 
-		if ( typeof localizedText !== "undefined" ) {
+		if ( typeof updateElementsdText !== "undefined" ) {
 
-			if ( _.isObject( localizedText ) ) {
+			if ( _.isObject( updateElementsdText ) ) {
 				
-				_.each( localizedText, function ( val, key ) {
+				_.each( updateElementsdText, function ( val, key ) {
 					
 					if ( key === "text" ){
 						
 						if ( el.attr( "data-abjson-r" ) ) {
-							el.html( wildcardReplace( localizedText, el.attr( "data-abjson-r" ).split("|") ) );
+							el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
 						} else {
 							el.html( val );
 						}
@@ -126,9 +97,9 @@ changelog:
 			} else {
 
 				if ( el.attr( "data-abjson-r" ) ) {
-					el.html( wildcardReplace( localizedText, el.attr( "data-abjson-r" ).split("|") ) );
+					el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
 				} else {
-					el.html( localizedText );
+					el.html( updateElementsdText );
 				}
 
 			}
@@ -141,7 +112,7 @@ changelog:
 	}
 
 	function wildcardReplace ( text, replaceElements ) {
-		
+
 		var i,
 			replacedText = text;
 		
@@ -153,9 +124,35 @@ changelog:
 
 	}
 
+	// Export the abjson object for **CommonJS**. 
+	// If we're not in CommonJS, add 'abjson' to the
+	// global object or to jquery.
+	if ( typeof module !== 'undefined' && module.exports ) {
+		module.exports = abjson;
+	} else {
+		if($) {
+			$.abjson = $.abjson || abjson;
+
+			$.fn.abjson = function ( options ) {
+
+				var elements = $("a[data-abjson]", this);
+
+
+
+				elements.each( function () { 
+					updateElements( $(this), options );
+				});
+
+			};
+		}
+
+		root.abjson = root.abjson || abjson;
+	}
+
 	// public api interface
-	abjson.init = init;
+	abjson.load = load;
 	abjson.options = options;
 	abjson.get = get;
+
 
 })();
