@@ -3,14 +3,56 @@
 
 A complete tool to maintain all the front-end through a json. You can manipulate all text and HTML attributes automatically.
 
-## Features
 * Easy to maintain
 * The best way to work with i18n files
 * Fast startup, lightweight
-* Loading asynchronous json files
+* Dynamic loading json files
 * Errors and warnings
 
-### Getting started
+## Examples
+
+#####Bind your texts with the source json
+```javascript
+//file: source.json
+{
+	"title" : "GitHub",
+	"text" : "GitHub · Build software better, together."
+}
+```
+in your html
+```html
+
+<h3 data-abjson='title'></h3>
+<p data-abjson='text'></p>
+```
+becomes
+```html
+<h3 data-abjson='title'>GitHub</h3>
+<p data-abjson='text'>GitHub · Build software better, together.</p>
+```
+
+
+#####Bind html attributes
+You can work with objects in the source. The default property for the html text in an object will be "text". If you specified an html attribute it will be replaced
+```javascript
+//file: source.json
+{
+	"githubLink" : {
+		"text" : "GitHub · Build software better",
+		"href" : "https://github.com/"
+	}
+}
+```
+in your html
+```html
+<a data-abjson='githubLink' href=''></a>
+```
+becomes
+```html
+<a data-abjson='github' href='https://github.com/'>GitHub · Build software better</a>
+```
+
+## Getting started
 create a file that will be the source of all your texts and HTML attributes
 
 ```javascript
@@ -54,3 +96,6 @@ abjson.init({
       $(body).abjson();
     });
 ```
+## Methods
+###abjson.init (options, callback)
+load the resource file and init the library. 
