@@ -1,6 +1,8 @@
 # absolute-json
 =========
 
+![logo](logo.gif)
+
 A complete tool to maintain all the front-end through a json. You can manipulate all text and HTML attributes automatically.
 
 * The best way to work with config files
@@ -104,4 +106,6 @@ load the resource file and init the library.
 
 
 #changelog:
-###0.1 
+###0.5
+- Many improvements
+- Removed underscorejs dependency

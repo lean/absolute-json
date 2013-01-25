@@ -1,0 +1,11 @@
+{
+	"github" : {
+		"text" : "Explore GitHub",
+		"href" : "https://github.com/explore"
+	}, 
+	"google" : "http://www.google.com",
+	"logo" : {
+		"src" : "http://underscorejs.org/docs/images/underscore.png"
+	},
+	"points" : "you points: %1 - your position: %2"
+}

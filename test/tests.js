@@ -45,12 +45,14 @@ describe('DOM manipulation', function () {
 	});
 
 	it ("should be translated all the body", function () {
+
 		$("body").abjson();
+				
 		expect($(".linkGitHub").html()).to.equal("Explore GitHub");
+		
 	})
 
 	it ("should be translated all the attr", function () {
-		$("body").abjson();
 		expect($(".linkGitHub").attr("href")).to.equal("https://github.com/explore");
 	})
 
