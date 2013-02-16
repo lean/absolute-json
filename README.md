@@ -93,15 +93,15 @@ init the lib
 
 ```javascript
 abjson.init({
-  	sourceUrl : 'text-sources.json',
-		},function(err){
-      if (err) {
-        throw err;
-      }
+    sourceUrl : 'text-sources.json',
+  }, function(err){
+    if (err) {
+      throw err;
+    }
 
-      //update the dom
-      $(body).abjson();
-    });
+    //update the dom
+    $(body).abjson();
+});
 ```
 ## Methods
 ###abjson.init (options, callback)
@@ -115,14 +115,14 @@ var jsonData = {
 
 abjson.init({
     source : jsonData,
-    },function(err){
-      if (err) {
-        throw err;
-      }
+  }, function(err){
+  if (err) {
+    throw err;
+  }
 
-      //update the dom
-      $(body).abjson();
-    });
+  //update the dom
+  $(body).abjson();
+});
 ```
 
 ##Contribute
@@ -132,8 +132,8 @@ abjson.init({
 4. get some vodka ;)
 
 #changelog:
-###0.6
-- Added support to load json from reference (not a file URL)
+###0.6  
+- Added support to load json from reference (not a file URL)  
 ###0.5
 - Many improvements
 - Removed underscorejs dependency
