@@ -78,7 +78,7 @@ now in your HTML import the lib
 
 <!-- file: example.html -->
 
-<link src="absolute-json.js">
+<script src="absolute-json.js">
 
 ```
 
@@ -93,19 +93,47 @@ init the lib
 
 ```javascript
 abjson.init({
-  	localeUrl : 'text-sources.json',
-		},function(){
-      //update the dom
-      $(body).abjson();
-    });
+    sourceUrl : 'text-sources.json',
+  }, function(err){
+    if (err) {
+      throw err;
+    }
+
+    //update the dom
+    $(body).abjson();
+});
 ```
 ## Methods
 ###abjson.init (options, callback)
 load the resource file and init the library. 
 
+load resource from memory
+```javascript
+var jsonData = {
+  "hello": "hola"
+};
 
+abjson.init({
+    source : jsonData,
+  }, function(err){
+  if (err) {
+    throw err;
+  }
+
+  //update the dom
+  $(body).abjson();
+});
+```
+
+##Contribute
+1. install some HTTP static server pointing to root directory (i.e. npm install -g wup)
+2. open your browser and run tests from http://localhost:8080
+3. pull request
+4. get some vodka ;)
 
 #changelog:
+###0.6  
+- Added support to load json from reference (not a file URL)  
 ###0.5
 - Many improvements
 - Removed underscorejs dependency
