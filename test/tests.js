@@ -4,12 +4,16 @@ describe('Initialization', function() {
 	
 	var abjson = window.abjson;
     
-    it('should be exist', function() {
+  it('should be exist', function() {
 		expect(abjson).to.exist;
 	});
 
-    it('expect a resource url for json', function() {
-		expect(abjson.options.sourceUrl).to.be.a("string");
+  it('expect a resource url or a resource for json', function() {
+		if (abjson.options.sourceUrl)
+			expect(abjson.options.sourceUrl).to.be.a("string");
+		else if (abjson.options.source)
+			expect(abjson.options.source).to.be.an("object");
+		else throw new Error('Expected [sourceUrl] or [source]');
 	});
 
  	it('should load a json', function() {
