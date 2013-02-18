@@ -13,6 +13,7 @@ Licensed under the MIT license.
 
 	// defaults
 	var options = {
+		source: null,
 		sourceUrl: "",
 		localeObject: {},
 		customJsonParser : null
@@ -47,34 +48,34 @@ Licensed under the MIT license.
 
 	function load ( opt, callback ) {
 		
+		options.source = opt.source;
 		options.sourceUrl = opt.sourceUrl;
 		options.customJsonParser = opt.customJsonParser;
 
-		loadSource({
-			url:opt.sourceUrl
-		}, callback );
-
+		loadSource( callback );
 	}
 
-	function loadSource ( opt, callback ) {
+	function loadSource ( callback ) {
+
+		function parse(data){
+			options.localeObject = (options.customJsonParser) ? options.customJsonParser(data) : data;
+				
+			callback();
+		}
+
+		if (options.source){
+			parse(options.source);
+			return;
+		}
 
 		$.ajax({
-			url: opt.url,
+			url: options.sourceUrl,
 			type: 'get',
 			dataType: 'json',
 			cache : false,
-			success: function ( data ) {
-
-				options.localeObject = (options.customJsonParser) ? options.customJsonParser(data) : data;
-				
-				callback();
-
-			},
+			success: parse,
 			error: function ( xhr, textStatus ) {
-				callback();
-
-				throw new abjError(textStatus.toUpperCase(), xhr.statusText);
-
+				callback(new abjError(textStatus.toUpperCase(), xhr.statusText));
 			}
 		});
 	}
