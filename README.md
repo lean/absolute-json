@@ -131,9 +131,11 @@ abjson.init({
 3. pull request
 4. get some vodka ;)
 
-#changelog:
+##Changelog
+
 ###0.6  
 - Added support to load json from reference (not a file URL)  
+
 ###0.5
 - Many improvements
 - Removed underscorejs dependency
