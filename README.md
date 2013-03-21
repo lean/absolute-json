@@ -34,6 +34,22 @@ becomes
 <p data-abjson='text'>GitHub · Build software better, together.</p>
 ```
 
+#####Bind your texts with `place holders for values` in the source json
+```javascript
+//file: source.json
+{
+	"title" : "%1 is something %2",
+}
+```
+in your html
+```html
+
+<h3 data-abjson='title' data-abjson-r='Abjson|Amazing'></h3>
+```
+becomes
+```html
+<h3 data-abjson='title' data-abjson-r='Abjson|Amazing'>Abjson is something Amazing</h3>
+```
 
 #####Bind html attributes
 You can work with objects in the source. The default property for the html text in an object will be "text". If you specified an html attribute it will be replaced
