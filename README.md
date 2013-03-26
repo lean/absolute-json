@@ -129,7 +129,7 @@ var jsonData = {
   "hello": "hola"
 };
 
-abjson.init({
+abjson.load({
     source : jsonData,
   }, function(err){
   if (err) {
