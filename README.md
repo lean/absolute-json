@@ -111,12 +111,11 @@ init the lib
 abjson.init({
     sourceUrl : 'text-sources.json',
   }, function(err){
-    if (err) {
-      throw err;
-    }
-
-    //update the dom
-    $(body).abjson();
+      if (err) {
+        throw err;
+      }
+      //update the dom
+      $(body).abjson();
 });
 ```
 ## Methods
