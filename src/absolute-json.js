@@ -81,9 +81,8 @@ Licensed under the MIT license.
 	}
 
 	function get ( key ) {
-	
-		return options.localeObject[key] ? options.localeObject[key] : undefined;
-
+		var value = options.localeObject[key] ? options.localeObject[key] : undefined;
+		return wildcardReplace(value, Array.prototype.slice.call(arguments, 1));
 	}
 
 	function updateElements ( el, opt ) {
@@ -136,7 +135,7 @@ Licensed under the MIT license.
 			replacedText = text;
 		
 		for( i=0; i < replaceElements.length; i++ ) {
-			replacedText = replacedText.replace( "%" + (i+1), replaceElements[i] )
+			replacedText = replacedText.replace( new RegExp("%" + (i+1), 'ig'), replaceElements[i] )
 		};
 
 		return replacedText;
