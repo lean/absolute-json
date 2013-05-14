@@ -81,8 +81,9 @@ Licensed under the MIT license.
 	}
 
 	function get ( key ) {
-		var value = options.localeObject[key] ? options.localeObject[key] : undefined;
-		return wildcardReplace(value, Array.prototype.slice.call(arguments, 1));
+		return options.localeObject[key] ?
+						wildcardReplace(options.localeObject[key], Array.prototype.slice.call(arguments, 1)) :
+						undefined;
 	}
 
 	function updateElements ( el, opt ) {

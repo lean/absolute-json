@@ -69,6 +69,11 @@ describe('Keys templating', function(){
 	it('expect get to replace %1 and %2 even with falsy values', function(){
 		expect(abjson.get("points", 0, "")).to.equal("you points: 0 - your position: ");
 	});
+
+	it('expect an undefined value for an non existing key when providing multiple parameters', function(){
+		expect(abjson.get("key-that-does-not-exist", ':facepalm:', 'number')).to.be.undefined;
+	});
+
 });
 
 describe('DOM manipulation', function(){
