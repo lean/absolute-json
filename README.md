@@ -139,7 +139,31 @@ abjson.load({
   $(body).abjson();
 });
 ```
+###abjson.get (key)
+get the value for a given key
 
+```javascript
+  var jsonData = {
+    "hello": "hola extraño, espero que disfrute leyendo esta documentación"
+  };
+  //init...
+  console.log(abjson.get('hello')); // hola extraño...
+});
+```
+###abjson.get (key, a, b...)
+It accepts a variable number of parameters after the key. 
+get the value for a given key. If the value is templated, generate the output based on the extra parameters provided.
+
+```javascript
+  var jsonData = {
+    "hello": "hola %1 %2!",
+    "bye": "chau %1"
+  };
+  //init...
+  console.log(abjson.get('hello', 'Mr.', 'Magoo')); // hola Mr. Magoo!
+  console.log(abjson.get('bye','Magoo')); // chau Magoo
+});
+```
 ##Contribute
 1. install some HTTP static server pointing to root directory (i.e. npm install -g wup)
 2. open your browser and run tests from http://localhost:8080
