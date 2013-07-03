@@ -108,7 +108,7 @@ Add the *data-abjson* attribute to the HTML elements
 init the lib
 
 ```javascript
-abjson.init({
+abjson.load({
     sourceUrl : 'text-sources.json',
   }, function(err){
       if (err) {
@@ -119,7 +119,7 @@ abjson.init({
 });
 ```
 ## Methods
-###abjson.init (options, callback)
+###abjson.load (options, callback)
 load the resource file and init the library. 
 
 load resource from memory
