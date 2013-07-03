@@ -1,6 +1,6 @@
 /*
 absolute-json
-version 0.5
+version 0.6
 author: Leandro Cabrera
 https://github.com/lean/absolute-json
 Licensed under the MIT license.
