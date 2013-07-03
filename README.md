@@ -18,7 +18,7 @@ A complete tool to maintain all the front-end through a json. You can manipulate
 ```javascript
 //file: source.json
 {
-	"title" : "GitHub",
+    "title" : "GitHub",
 	"text" : "GitHub · Build software better, together."
 }
 ```
@@ -122,7 +122,7 @@ abjson.load({
 ###abjson.load (options, callback)
 load the resource file and init the library. 
 
-load resource from memory
+For example, you can load sources from memory
 ```javascript
 var jsonData = {
   "hello": "hola"
@@ -139,6 +139,21 @@ abjson.load({
   $(body).abjson();
 });
 ```
+
+Or if you want, you can load sources from an URL
+```javascript
+abjson.load({
+    sourceUrl : "http://path.to.your.source/file.json",
+  }, function(err){
+  if (err) {
+    throw err;
+  }
+
+  //update the dom
+  $(body).abjson();
+});
+```
+
 ###abjson.get (key)
 get the value for a given key
 
