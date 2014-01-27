@@ -17,7 +17,7 @@ Licensed under the MIT license.
 		sourceUrl: "",
 		localeObject: {},
 		customJsonParser : null
-	}
+	};
 
 	// helpers
 	function abjError ( name, message ) {
@@ -136,8 +136,8 @@ Licensed under the MIT license.
 			replacedText = text;
 		
 		for( i=0; i < replaceElements.length; i++ ) {
-			replacedText = replacedText.replace( new RegExp("%" + (i+1), 'ig'), replaceElements[i] )
-		};
+			replacedText = replacedText.replace( new RegExp("%" + (i+1), 'ig'), replaceElements[i] );
+		}
 
 		return replacedText;
 
