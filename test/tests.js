@@ -1,31 +1,25 @@
 var expect = chai.expect;
 
 describe('Initialization', function() {
-	
+
 	var abjson = window.abjson;
-    
+
   it('should be exist', function() {
 		expect(abjson).to.exist;
 	});
 
-  it('expect a resource url or a resource for json', function() {
-		if (abjson.options.sourceUrl)
-			expect(abjson.options.sourceUrl).to.be.a("string");
-		else if (abjson.options.source)
+  it('expect a source', function() {
+		if  (abjson.options.source)
 			expect(abjson.options.source).to.be.an("object");
-		else throw new Error('Expected [sourceUrl] or [source]');
-	});
-
- 	it('should load a json', function() {
-		expect(abjson.options.localeObject).to.be.a("object").to.not.be.empty;
+		else throw new Error('Expected [source]');
 	});
 
 });
 
 describe('Keys', function() {
-	
+
 	var abjson = window.abjson;
-    
+
 	it('expect a getter function', function() {
 		expect(abjson.get).to.exist;
 	});
@@ -77,19 +71,15 @@ describe('Keys templating', function(){
 });
 
 describe('DOM manipulation', function(){
-	
-	var abjson = window.abjson;
 
-	it("should be a method of jQuery", function(){
-		expect($.abjson).to.exist;
-	});
+	var abjson = window.abjson;
 
 	it("should be translated all the body", function (){
 
-		$("body").abjson();
-				
+		abjson.updateElements();
+
 		expect($(".linkGitHub").html()).to.equal("Explore GitHub");
-		
+
 	});
 
 	it("should be translated all the attr", function(){

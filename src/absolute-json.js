@@ -1,22 +1,18 @@
-/*
+/*!
 absolute-json
-version 0.6
+version 0.7.0
 author: Leandro Cabrera
 https://github.com/lean/absolute-json
 Licensed under the MIT license.
 */
+
 (function () {
-
-	var root = this,
-		$ = root.jQuery,
-		abjson = {};
-
+	"use strict";
 	// defaults
 	var options = {
 		source: null,
 		sourceUrl: "",
-		localeObject: {},
-		customJsonParser : null
+		localeObject: {}
 	};
 
 	// helpers
@@ -29,103 +25,75 @@ Licensed under the MIT license.
 	abjError.prototype.constructor = abjError;
 
 	function forEach (obj, iterator, context) {
-		if (obj == null) return;
+		if (!obj){
+			return;
+		}
 		if (Array.prototype.forEach && obj.forEach === Array.prototype.forEach) {
 			obj.forEach(iterator, context);
 		} else if (obj.length === +obj.length) {
 			for (var i = 0, l = obj.length; i < l; i++) {
-				if (iterator.call(context, obj[i], i, obj) === {}) return;
+				if (iterator.call(context, obj[i], i, obj) === {}){
+					return;
+				}
 			}
 		} else {
 			for (var key in obj) {
 				if ( obj.hasOwnProperty(key) ) {
-					if (iterator.call(context, obj[key], key, obj) === {}) return;
+					if (iterator.call(context, obj[key], key, obj) === {}) {
+						return;
+					}
 				}
 			}
 		}
 
 	}
 
-	function load ( opt, callback ) {
-		
-		options.source = opt.source;
-		options.sourceUrl = opt.sourceUrl;
-		options.customJsonParser = opt.customJsonParser;
-
-		loadSource( callback );
-	}
-
-	function loadSource ( callback ) {
-
-		function parse(data){
-			options.localeObject = (options.customJsonParser) ? options.customJsonParser(data) : data;
-				
-			callback();
-		}
-
-		if (options.source){
-			parse(options.source);
-			return;
-		}
-
-		$.ajax({
-			url: options.sourceUrl,
-			type: 'get',
-			dataType: 'json',
-			cache : false,
-			success: parse,
-			error: function ( xhr, textStatus ) {
-				callback(new abjError(textStatus.toUpperCase(), xhr.statusText));
-			}
-		});
+	function setSource ( source ) {
+		options.source = source;
 	}
 
 	function get ( key ) {
-		return options.localeObject[key] ?
-						wildcardReplace(options.localeObject[key], Array.prototype.slice.call(arguments, 1)) :
+		return options.source[key] ?
+						wildcardReplace(options.source[key], Array.prototype.slice.call(arguments, 1)) :
 						undefined;
 	}
 
-	function updateElements ( el, opt ) {
+	function updateElements ( el ) {
 
-		var elKey = el.attr( "data-abjson" ),
-			updateElementsdText = get( elKey );
+		var elKey = el.attributes["data-abjson"].value,
+				elReplaceAttr = el.attributes["data-abjson-r"],
+				updateElementsText = options.source[elKey];
 
-		if ( typeof updateElementsdText !== "undefined" ) {
+		if ( typeof updateElementsText !== "undefined" ) {
 
-			if ( updateElementsdText === Object(updateElementsdText) ) {
-				
-				forEach( updateElementsdText, function ( val, key ) {
-					
+			if ( updateElementsText === Object(updateElementsText) ) {
+
+				forEach( updateElementsText, function ( val, key ) {
+
 					if ( key === "text" ){
-						
-						if ( el.attr( "data-abjson-r" ) ) {
-							el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
+						if ( elReplaceAttr ) {
+							el.innerHTML = wildcardReplace( updateElementsText, elReplaceAttr.value.split("|") ) ;
 						} else {
-							el.html( val );
+							el.innerHTML = val;
 						}
-
 					} else {
-
-						el.attr( key,val );
-
+						el.attributes[key].value = val;
 					}
-
 				});
 
 			} else {
 
-				if ( el.attr( "data-abjson-r" ) ) {
-					el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
+				if ( elReplaceAttr ) {
+					el.innerHTML =  wildcardReplace( updateElementsText, elReplaceAttr.value.split("|") ) ;
 				} else {
-					el.html( updateElementsdText );
+					el.innerHTML =  updateElementsText ;
 				}
 
 			}
 
 		} else {
 			//key not found
-			el.html(elKey + " NOT FOUND");
+			el.innerHTML = elKey + " NOT FOUND";
 		}
 
 	}
@@ -133,37 +101,34 @@ Licensed under the MIT license.
 	function wildcardReplace ( text, replaceElements ) {
 
 		var i,
-			replacedText = text;
-		
-		for( i=0; i < replaceElements.length; i++ ) {
-			replacedText = replacedText.replace( new RegExp("%" + (i+1), 'ig'), replaceElements[i] );
+			replacedText = text,
+			replaceElementsLength = replaceElements.length;
+
+		for( i=0; i < replaceElementsLength; i++ ) {
+			replacedText = replacedText.replace( new RegExp("%" + (i+1), "ig"), replaceElements[i] );
 		}
 
 		return replacedText;
 
 	}
 
-	if (!$.abjson && !root.abjson) {
-		$.abjson = $.abjson || abjson;
+	function findElements(el, opt){
+		var elements = [];
 
-		$.fn.abjson = function ( options ) {
-
-			var elements = $("[data-abjson]", this);
-
-			elements.each( function () { 
-				updateElements( $(this), options );
-			});
-
-		};
-			
-		root.abjson = root.abjson || abjson;
+		if (!el) {el = document;}
+		elements =  Array.prototype.slice.call(el.querySelectorAll("[data-abjson]"));
+		forEach( elements, function (v) {
+			updateElements( v, opt );
+		});
 	}
-	
+
+	this.abjson = this.abjson || {};
 
 	// public api interface
-	abjson.load = load;
+	abjson.setSource = setSource;
 	abjson.options = options;
 	abjson.get = get;
+	abjson.updateElements = findElements;
 
 
 })();
