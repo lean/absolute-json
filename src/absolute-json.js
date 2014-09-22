@@ -14,6 +14,7 @@ Licensed under the MIT license.
 		sourceUrl: "",
 		localeObject: {}
 	};
+	var abjson = {};
 
 	// helpers
 	function abjError ( name, message ) {
@@ -122,13 +123,11 @@ Licensed under the MIT license.
 		});
 	}
 
-	this.abjson = this.abjson || {};
-
 	// public api interface
 	abjson.setSource = setSource;
 	abjson.options = options;
 	abjson.get = get;
 	abjson.updateElements = findElements;
-
+	window.abjson = abjson;
 
 })();
