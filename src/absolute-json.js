@@ -47,7 +47,7 @@ Licensed under the MIT license.
 	}
 
 	function load ( opt, callback ) {
-		
+
 		options.source = opt.source;
 		options.sourceUrl = opt.sourceUrl;
 		options.customJsonParser = opt.customJsonParser;
@@ -59,7 +59,7 @@ Licensed under the MIT license.
 
 		function parse(data){
 			options.localeObject = (options.customJsonParser) ? options.customJsonParser(data) : data;
-				
+
 			callback();
 		}
 
@@ -94,11 +94,11 @@ Licensed under the MIT license.
 		if ( typeof updateElementsdText !== "undefined" ) {
 
 			if ( updateElementsdText === Object(updateElementsdText) ) {
-				
+
 				forEach( updateElementsdText, function ( val, key ) {
-					
+
 					if ( key === "text" ){
-						
+
 						if ( el.attr( "data-abjson-r" ) ) {
 							el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
 						} else {
@@ -134,7 +134,7 @@ Licensed under the MIT license.
 
 		var i,
 			replacedText = text;
-		
+
 		for( i=0; i < replaceElements.length; i++ ) {
 			replacedText = replacedText.replace( new RegExp("%" + (i+1), 'ig'), replaceElements[i] );
 		}
@@ -150,15 +150,15 @@ Licensed under the MIT license.
 
 			var elements = $("[data-abjson]", this);
 
-			elements.each( function () { 
+			elements.each( function () {
 				updateElements( $(this), options );
 			});
 
 		};
-			
+
 		root.abjson = root.abjson || abjson;
 	}
-	
+
 
 	// public api interface
 	abjson.load = load;
