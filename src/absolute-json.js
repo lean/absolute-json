@@ -136,6 +136,11 @@ Licensed under the MIT license.
 			replacedText = text;
 
 		for( i=0; i < replaceElements.length; i++ ) {
+			if(typeof replaceElements[i].replace === 'function'){
+				replaceElements[i] = replaceElements[i].replace(/%{(.+?)}/g, function($0, $1){
+					return get($1);
+				});
+			}
 			replacedText = replacedText.replace( new RegExp("%" + (i+1), 'ig'), replaceElements[i] );
 		}
 
