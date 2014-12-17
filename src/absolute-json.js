@@ -1,6 +1,10 @@
 /*
+absolute-json-improved-templating
+version 0.1
+author: Martin Toledo Do Pazo
+https://github.com/dreadloop/absolute-json
+a fork of:
 absolute-json
-version 0.6
 author: Leandro Cabrera
 https://github.com/lean/absolute-json
 Licensed under the MIT license.
