@@ -50,6 +50,35 @@ Licensed under the MIT license.
 
 	}
 
+	function init( opt, callback ) {
+		options.resources = [];
+
+		$.each(opt.resources, function(i, resource) {
+			options.resources.push(resource);
+			resource.localeObject = {};
+			loadResource(options.resources[i]);
+		});
+		/*options.localeUrl = opt.localeUrl;
+		 options.customJsonParser = opt.customJsonParser;
+
+		 loadResource({
+		 url:opt.localeUrl
+		 }, callback );*/
+
+		$.fn.abjson = function ( options ) {
+
+			// localize childs
+			var elements = $(this).find( '[data-abjson]' );
+
+			elements.each( function () {
+				localize( $(this), options );
+			});
+
+		};
+
+		callback();
+
+	}
 	function load ( opt, callback ) {
 
 		options.source = opt.source;
@@ -84,10 +113,25 @@ Licensed under the MIT license.
 		});
 	}
 
-	function get ( key ) {
-		return options.localeObject[key] ?
-						wildcardReplace(options.localeObject[key], Array.prototype.slice.call(arguments, 1)) :
-						undefined;
+	function get ( key, resource ) {
+		try{
+			if (key === " ") {
+				return "";
+			} else if( !resource && options.resources[0].localeObject[key] ) {
+				return options.resources[0].localeObject[key];
+			} else if( resource ) {
+				for (var i = 0; i<options.resources.length; i++) {
+					if (options.resources[i].name === resource && options.resources[i].localeObject[key]) {
+						return options.resources[i].localeObject[key];
+					}
+				}
+			}  else {
+				throw "KEY " + key + " NOT FOUND";
+			}
+		} catch(err) {
+			//console.error(err);
+		}
+
 	}
 
 	function updateElements ( el, opt ) {
@@ -168,11 +212,56 @@ Licensed under the MIT license.
 		root.abjson = root.abjson || abjson;
 	}
 
+	function loadResource( resource ) {
+
+		$.ajax({
+			url: resource.localeUrl,
+			type: 'get',
+			dataType: 'json',
+			cache: false,
+			async: false,
+			success: function ( data ) {
+
+				resource.localeObject = (resource.customJsonParser) ? resource.customJsonParser(data) : data;
+
+				if (resource.callback !== undefined) {
+					resource.callback();
+				}
+
+			},
+			error: function ( xhr, textStatus ) {
+				if (resource.callback !== undefined) {
+					resource.callback();
+				}
+				throw textStatus.toUpperCase() + ": " + xhr.statusText;
+
+			}
+		});
+	}
+
+	function getKeys ( resource ) {
+		try{
+			if( !resource && options.resources[0].localeObject ) {
+				return _.keys(options.resources[0].localeObject);
+			} else if( resource ) {
+				for (var i = 0; i<options.resources.length; i++) {
+					if (options.resources[i].name === resource && options.resources[i].localeObject) {
+						return _.keys(options.resources[i].localeObject);
+					}
+				}
+			}
+		} catch(err) {
+			//console.error(err);
+		}
+
+	}
 
 	// public api interface
+	abjson.init = init;
 	abjson.load = load;
 	abjson.options = options;
 	abjson.get = get;
+	abjson.getKeys = getKeys;
 
 
 })();
