@@ -1,14 +1,26 @@
 {
   "name": "absolute-json",
-  "description": "A complete tool to maintain all the front-end through a json",
-  "version": "0.6",
-  "author": "Leandro Cabrera",
-  "dependencies": {
+  "version": "1.0.0",
+  "description": "A fork of https://github.com/lean/absolute-json with improved templating support",
+  "main": "src/absolute-json.js",
+  "directories": {
+    "test": "test"
   },
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dreadloop/absolute-json.git"
+  },
+  "author": "Martin Toledo Do Pazo <martin.d.toledo@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dreadloop/absolute-json/issues"
+  },
+  "homepage": "https://github.com/dreadloop/absolute-json",
   "devDependencies": {
-    "mocha": "~1.6.0",
-    "chai": "~1.3.0"
+    "chai": "^3.0.0",
+    "mocha": "^2.2.5"
   }
 }
