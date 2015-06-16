@@ -1,6 +1,6 @@
 {
   "name": "absolute-json",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A fork of https://github.com/lean/absolute-json with improved templating support",
   "main": "src/absolute-json.js",
   "directories": {
