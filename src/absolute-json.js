@@ -113,26 +113,12 @@ Licensed under the MIT license.
 		});
 	}
 
-	function get ( key, resource ) {
-		try{
-			if (key === " ") {
-				return "";
-			} else if( !resource && options.resources[0].localeObject[key] ) {
-				return options.resources[0].localeObject[key];
-			} else if( resource ) {
-				for (var i = 0; i<options.resources.length; i++) {
-					if (options.resources[i].name === resource && options.resources[i].localeObject[key]) {
-						return options.resources[i].localeObject[key];
-					}
-				}
-			}  else {
-				throw "KEY " + key + " NOT FOUND";
-			}
-		} catch(err) {
-			//console.error(err);
-		}
+  function get ( key ) {
+    return options.localeObject[key] ?
+      wildcardReplace(options.localeObject[key], Array.prototype.slice.call(arguments, 1)) :
+      undefined;
+  }
 
-	}
 
 	function updateElements ( el, opt ) {
 
@@ -193,7 +179,6 @@ Licensed under the MIT license.
 		}
 
 		return replacedText;
-
 	}
 
 	if (!$.abjson && !root.abjson) {
