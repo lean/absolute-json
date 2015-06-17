@@ -1,0 +1,27 @@
+{
+  "name": "absolute-json-improved-templating",
+  "version": "0.1",
+  "homepage": "https://github.com/dreadloop/absolute-json",
+  "description": "Custom version of absolute-json, allows adding keys inside of data-bjson-r wildcards (in the following form \"%{replaceable_key}\")",
+  "main": "src/absolute-json.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "templating",
+    "attribute-based-replace",
+    "attribute-based-templating"
+  ],
+  "authors": [
+    "Leandro Cabrera",
+    "Martin Toledo Do Pazo"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
