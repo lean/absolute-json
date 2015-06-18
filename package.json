@@ -1,7 +1,7 @@
 {
   "name": "absolute-json",
   "description": "A complete tool to maintain all the front-end through a json",
-  "version": "0.6",
+  "version": "0.7",
   "author": "Leandro Cabrera",
   "dependencies": {
   },
