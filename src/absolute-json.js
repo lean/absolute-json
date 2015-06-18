@@ -41,7 +41,6 @@
                 }
             }
         }
-
     }
 
     function getPropertyByString(obj,str) {
