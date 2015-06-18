@@ -9,5 +9,17 @@
 	},
 	"points" : "you points: %1 - your position: %2",
 	"greet" : "hello %1",
-	"confirm" : "The color you selected is %1. Wanna replace %2 with %1?"
+	"confirm" : "The color you selected is %1. Wanna replace %2 with %1?",
+	"buttons" : {
+		"footer" : {
+			"github" : {
+				"text" : "Explore GitHub",
+				"href" : "https://github.com/explore"
+			},
+			"home" : {
+				"text" : "Absolut %1",
+				"href" : "https://github.com/lean/absolute-json"
+			}
+		}
+	}
 }

@@ -172,6 +172,10 @@ get the value for a given key. If the value is templated, generate the output ba
 
 ##Changelog
 
+###0.7
+- Added support to access an object with string key
+- Removed support to custom parser
+
 ###0.6  
 - Added support to load json from reference (not a file URL)  
 

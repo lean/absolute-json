@@ -38,6 +38,10 @@ describe('Keys', function() {
 		expect(abjson.get("xswq23d")).to.be.undefined;
 	});
 
+	it('expect a value for an string with keys', function() {
+		expect(abjson.get("buttons.footer.github.text")).to.equal("Explore GitHub");
+	});
+
 });
 
 describe('Keys templating', function(){
@@ -55,6 +59,10 @@ describe('Keys templating', function(){
 
 	it('expect get to support multiple parameters', function(){
 		expect(abjson.get("points", "100", "1")).to.equal("you points: 100 - your position: 1");
+	});
+
+	it('expect get to support multiple parameters with an string key', function(){
+		expect(abjson.get("buttons.footer.home.text", "Json")).to.equal("Absolut Json");
 	});
 
 	it('expect get to replace %1 but not %2 if only one extra parameter provided', function(){
@@ -80,10 +88,6 @@ describe('DOM manipulation', function(){
 	
 	var abjson = window.abjson;
 
-	it("should be a method of jQuery", function(){
-		expect($.abjson).to.exist;
-	});
-
 	it("should be translated all the body", function (){
 
 		$("body").abjson();
@@ -104,4 +108,11 @@ describe('DOM manipulation', function(){
 		expect($(".confirm").text()).to
 			.equal("The color you selected is blue. Wanna replace red with blue?");
 	});
+
+	it("should support access to object with an string key", function(){
+		expect($(".buttonGitHub").text()).to
+			.equal("Explore GitHub");
+	});
+
+
 })

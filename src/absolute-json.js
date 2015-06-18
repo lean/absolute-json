@@ -1,169 +1,188 @@
 /*
-absolute-json
-version 0.6
-author: Leandro Cabrera
-https://github.com/lean/absolute-json
-Licensed under the MIT license.
-*/
-(function () {
+ absolute-json
+ version 0.7
+ author: Leandro Cabrera
+ https://github.com/lean/absolute-json
+ Licensed under the MIT license.
+ */
+;(function (root,$) {
 
-	var root = this,
-		$ = root.jQuery,
-		abjson = {};
+    var abjson = {};
 
-	// defaults
-	var options = {
-		source: null,
-		sourceUrl: "",
-		localeObject: {},
-		customJsonParser : null
-	}
+    // defaults
+    var options = {
+        source: null,
+        sourceUrl: "",
+        localeObject: {},
+        customJsonParser : null
+    }
 
-	// helpers
-	function abjError ( name, message ) {
-		this.name = name;
-		this.message = message || "error";
-	}
+    // helpers
+    function AbjError ( name, message ) {
+        this.name = name;
+        this.message = message || "error";
+    }
 
-	abjError.prototype = new Error();
-	abjError.prototype.constructor = abjError;
+    AbjError.prototype = new Error();
+    AbjError.prototype.constructor = AbjError;
 
-	function forEach (obj, iterator, context) {
-		if (obj == null) return;
-		if (Array.prototype.forEach && obj.forEach === Array.prototype.forEach) {
-			obj.forEach(iterator, context);
-		} else if (obj.length === +obj.length) {
-			for (var i = 0, l = obj.length; i < l; i++) {
-				if (iterator.call(context, obj[i], i, obj) === {}) return;
-			}
-		} else {
-			for (var key in obj) {
-				if ( obj.hasOwnProperty(key) ) {
-					if (iterator.call(context, obj[key], key, obj) === {}) return;
-				}
-			}
-		}
+    function forEach (obj, iterator, context) {
+        if (obj == null) return;
+        if (Array.prototype.forEach && obj.forEach === Array.prototype.forEach) {
+            obj.forEach(iterator, context);
+        } else if (obj.length === +obj.length) {
+            for (var i = 0, l = obj.length; i < l; i++) {
+                if (iterator.call(context, obj[i], i, obj) === {}) return;
+            }
+        } else {
+            for (var key in obj) {
+                if ( obj.hasOwnProperty(key) ) {
+                    if (iterator.call(context, obj[key], key, obj) === {}) return;
+                }
+            }
+        }
 
-	}
+    }
 
-	function load ( opt, callback ) {
-		
-		options.source = opt.source;
-		options.sourceUrl = opt.sourceUrl;
-		options.customJsonParser = opt.customJsonParser;
+    function getPropertyByString(obj,str) {
+        var a = str.split('.');
+        while (a.length) {
+            var n = a.shift();
+            if (n in obj) {
+                obj = obj[n];
+            } else {
+                return;
+            }
+        }
+        return obj;
+    }
 
-		loadSource( callback );
-	}
+    function load ( opt, callback ) {
 
-	function loadSource ( callback ) {
+        options.source = opt.source;
+        options.sourceUrl = opt.sourceUrl;
 
-		function parse(data){
-			options.localeObject = (options.customJsonParser) ? options.customJsonParser(data) : data;
-				
-			callback();
-		}
+        loadSource( callback );
+    }
 
-		if (options.source){
-			parse(options.source);
-			return;
-		}
+    function loadSource ( callback ) {
 
-		$.ajax({
-			url: options.sourceUrl,
-			type: 'get',
-			dataType: 'json',
-			cache : false,
-			success: parse,
-			error: function ( xhr, textStatus ) {
-				callback(new abjError(textStatus.toUpperCase(), xhr.statusText));
-			}
-		});
-	}
+        if (options.source){
+            options.localeObject = options.source;
+            callback();
+            return;
+        }
 
-	function get ( key ) {
-		return options.localeObject[key] ?
-						wildcardReplace(options.localeObject[key], Array.prototype.slice.call(arguments, 1)) :
-						undefined;
-	}
+        $.ajax({
+            url: options.sourceUrl,
+            type: 'get',
+            dataType: 'json',
+            cache : false,
+            success: function(data){
+                options.localeObject = data;
+                callback();
+            },
+            error: function ( xhr, textStatus ) {
+                callback(new AbjError(textStatus.toUpperCase(), xhr.statusText));
+            }
+        });
+    }
 
-	function updateElements ( el, opt ) {
+    function get ( key ) {
+        var r;
 
-		var elKey = el.attr( "data-abjson" ),
-			updateElementsdText = get( elKey );
+        if(options.localeObject[key]){
 
-		if ( typeof updateElementsdText !== "undefined" ) {
+            r =  wildcardReplace(options.localeObject[key], Array.prototype.slice.call(arguments, 1));
 
-			if ( updateElementsdText === Object(updateElementsdText) ) {
-				
-				forEach( updateElementsdText, function ( val, key ) {
-					
-					if ( key === "text" ){
-						
-						if ( el.attr( "data-abjson-r" ) ) {
-							el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
-						} else {
-							el.html( val );
-						}
+        }else{
 
-					} else {
+            if(key.indexOf(".")>0){
+                r = wildcardReplace( getPropertyByString(options.localeObject,key), Array.prototype.slice.call(arguments, 1) );
+            }
 
-						el.attr( key,val );
+        }
 
-					}
+        return r;
 
-				});
+    }
 
-			} else {
+    function updateElements ( el, opt ) {
 
-				if ( el.attr( "data-abjson-r" ) ) {
-					el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
-				} else {
-					el.html( updateElementsdText );
-				}
+        var elKey = el.attr( "data-abjson" ),
+            updateElementsdText = get( elKey );
 
-			}
+        if ( typeof updateElementsdText !== "undefined" ) {
 
-		} else {
-			//key not found
-			el.html(elKey + " NOT FOUND");
-		}
+            if ( updateElementsdText === Object(updateElementsdText) ) {
 
-	}
+                forEach( updateElementsdText, function ( val, key ) {
 
-	function wildcardReplace ( text, replaceElements ) {
+                    if ( key === "text" ){
 
-		var i,
-			replacedText = text;
-		
-		for( i=0; i < replaceElements.length; i++ ) {
-			replacedText = replacedText.replace( new RegExp("%" + (i+1), 'ig'), replaceElements[i] )
-		};
+                        if ( el.attr( "data-abjson-r" ) ) {
+                            el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
+                        } else {
+                            el.html( val );
+                        }
 
-		return replacedText;
+                    } else {
 
-	}
+                        el.attr( key,val );
 
-	if (!$.abjson && !root.abjson) {
-		$.abjson = $.abjson || abjson;
+                    }
 
-		$.fn.abjson = function ( options ) {
+                });
 
-			var elements = $("[data-abjson]", this);
+            } else {
 
-			elements.each( function () { 
-				updateElements( $(this), options );
-			});
+                if ( el.attr( "data-abjson-r" ) ) {
+                    el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
+                } else {
+                    el.html( updateElementsdText );
+                }
 
-		};
-			
-		root.abjson = root.abjson || abjson;
-	}
-	
+            }
 
-	// public api interface
-	abjson.load = load;
-	abjson.options = options;
-	abjson.get = get;
+        } else {
+            el.html(elKey + " NOT FOUND");
+        }
+
+    }
+
+    function wildcardReplace ( text, replaceElements ) {
+
+        var i,
+            replacedText = text;
+
+        for( i=0; i < replaceElements.length; i++ ) {
+            replacedText = replacedText.replace( new RegExp("%" + (i+1), 'ig'), replaceElements[i] )
+        }
+
+        return replacedText;
+
+    }
+
+    if (!root.abjson) {
+
+        $.fn.abjson = function ( options ) {
+
+            var elements = $("[data-abjson]", this);
+
+            elements.each( function () {
+                updateElements( $(this), options );
+            });
+
+        };
+
+        root.abjson = root.abjson || abjson;
+    }
 
 
-})();
+    // public interface
+    abjson.load = load;
+    abjson.options = options;
+    abjson.get = get;
+
+
+})(window, jQuery);
