@@ -1,13 +1,19 @@
 {
-  "name": "absolute-json",
-  "version": "0.0.2",
-  "description": "A fork of https://github.com/lean/absolute-json with improved templating support",
+  "name": "absolute-json-improved-templating",
+  "version": "0.0.1",
+  "description": "Fork of https://github.com/lean/absolute-json/ with support for token replacement inside replacement strings",
   "main": "src/absolute-json.js",
   "directories": {
     "test": "test"
   },
+  "dependencies": {
+    "chai": "^3.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -18,9 +24,5 @@
   "bugs": {
     "url": "https://github.com/dreadloop/absolute-json/issues"
   },
-  "homepage": "https://github.com/dreadloop/absolute-json",
-  "devDependencies": {
-    "chai": "^3.0.0",
-    "mocha": "^2.2.5"
-  }
+  "homepage": "https://github.com/dreadloop/absolute-json"
 }
