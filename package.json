@@ -1,6 +1,6 @@
 {
   "name": "absolute-json-improved-templating",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fork of https://github.com/lean/absolute-json/ with support for token replacement inside replacement strings",
   "main": "src/absolute-json.js",
   "directories": {
