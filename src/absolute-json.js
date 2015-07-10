@@ -115,7 +115,7 @@ Licensed under the MIT license.
 
   function get ( key, replacements ) {
     return options.localeObject[key] ?
-      wildcardReplace(options.localeObject[key], replacements) :
+      wildcardReplace(options.localeObject[key], replacements || []) :
       undefined;
   }
 
