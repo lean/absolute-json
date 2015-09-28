@@ -1,31 +1,25 @@
 var expect = chai.expect;
 
 describe('Initialization', function() {
-	
+
 	var abjson = window.abjson;
-    
+
   it('should be exist', function() {
 		expect(abjson).to.exist;
 	});
 
-  it('expect a resource url or a resource for json', function() {
-		if (abjson.options.sourceUrl)
-			expect(abjson.options.sourceUrl).to.be.a("string");
-		else if (abjson.options.source)
+  it('expect a source', function() {
+		if  (abjson.options.source)
 			expect(abjson.options.source).to.be.an("object");
-		else throw new Error('Expected [sourceUrl] or [source]');
-	});
-
- 	it('should load a json', function() {
-		expect(abjson.options.localeObject).to.be.a("object").to.not.be.empty;
+		else throw new Error('Expected [source]');
 	});
 
 });
 
 describe('Keys', function() {
-	
+
 	var abjson = window.abjson;
-    
+
 	it('expect a getter function', function() {
 		expect(abjson.get).to.exist;
 	});
@@ -36,10 +30,6 @@ describe('Keys', function() {
 
 	it('expect an undefined value for an non existing key', function() {
 		expect(abjson.get("xswq23d")).to.be.undefined;
-	});
-
-	it('expect a value for an string with keys', function() {
-		expect(abjson.get("buttons.footer.github.text")).to.equal("Explore GitHub");
 	});
 
 });
@@ -59,10 +49,6 @@ describe('Keys templating', function(){
 
 	it('expect get to support multiple parameters', function(){
 		expect(abjson.get("points", "100", "1")).to.equal("you points: 100 - your position: 1");
-	});
-
-	it('expect get to support multiple parameters with an string key', function(){
-		expect(abjson.get("buttons.footer.home.text", "Json")).to.equal("Absolut Json");
 	});
 
 	it('expect get to replace %1 but not %2 if only one extra parameter provided', function(){
@@ -85,15 +71,15 @@ describe('Keys templating', function(){
 });
 
 describe('DOM manipulation', function(){
-	
+
 	var abjson = window.abjson;
 
 	it("should be translated all the body", function (){
 
-		$("body").abjson();
-				
+		abjson.updateElements();
+
 		expect($(".linkGitHub").html()).to.equal("Explore GitHub");
-		
+
 	});
 
 	it("should be translated all the attr", function(){
@@ -108,11 +94,4 @@ describe('DOM manipulation', function(){
 		expect($(".confirm").text()).to
 			.equal("The color you selected is blue. Wanna replace red with blue?");
 	});
-
-	it("should support access to object with an string key", function(){
-		expect($(".buttonGitHub").text()).to
-			.equal("Explore GitHub");
-	});
-
-
 })

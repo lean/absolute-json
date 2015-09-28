@@ -24,41 +24,32 @@
 
 <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="absolute-ajax.js"></script>
 <script src="http://chaijs.com/chai.js"></script>
 <script src="mocha.js"></script>
 <script src="/src/absolute-json.js"></script>
-<script> 
+<script>
 	mocha.setup('bdd');
 </script>
 <script src="tests.js"></script>
 <script>
 
 	window.onload = function() {
+		abjax.ajax({
+				type: "GET",
+				url: "locales/en.json",
+				error: function(xhr){
+					console.error(xhr);
+				},
+				success: function(data) {
 
-/* -> Uncomment to test static file source
-
-		$.getJSON("locales/en.json", function(data){
-			
-			abjson.load({ 
-				source : data
-			}, function(err){
-				if (err) 
-					throw err;
-				else 
+					abjson.setSource(data);
 					mocha.run();
+					
+				}
 			});
 
-		});
-*/
 
-		abjson.load({ 
-			sourceUrl : "locales/en.json"
-		}, function(err){
-			if (err) 
-				throw err;
-			else 
-				mocha.run();
-		});	
 
 	};
 </script>

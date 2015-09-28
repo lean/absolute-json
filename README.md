@@ -120,7 +120,7 @@ abjson.load({
 ```
 ## Methods
 ###abjson.load (options, callback)
-load the resource file and init the library. 
+load the resource file and init the library.
 
 For example, you can load sources from memory
 ```javascript
@@ -166,7 +166,7 @@ get the value for a given key
 });
 ```
 ###abjson.get (key, a, b...)
-It accepts a variable number of parameters after the key. 
+It accepts a variable number of parameters after the key.
 get the value for a given key. If the value is templated, generate the output based on the extra parameters provided.
 
 ```javascript
@@ -197,3 +197,7 @@ get the value for a given key. If the value is templated, generate the output ba
 ###0.5
 - Many improvements
 - Removed underscorejs dependency
+
+
+##TODO
+- Register as a Bower package

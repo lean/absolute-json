@@ -1,0 +1,17 @@
+{
+  "undef": true,
+  "unused": true,
+  "browser": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "noempty": true,
+  "quotmark": "double",
+  "strict": true,
+  "validthis": true,
+  "globals" : {
+    "abjson" : true
+  }
+}
