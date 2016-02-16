@@ -63,6 +63,7 @@ Licensed under the MIT license.
 
 		var elKey = el.attributes["data-abjson"].value,
 				elReplaceAttr = el.attributes["data-abjson-r"],
+				elAttrSelector = el.attributes["data-abjson-attr"],
 				updateElementsText = options.source[elKey];
 
 		if ( typeof updateElementsText !== "undefined" ) {
@@ -73,9 +74,17 @@ Licensed under the MIT license.
 
 					if ( key === "text" ){
 						if ( elReplaceAttr ) {
-							el.innerHTML = wildcardReplace( updateElementsText, elReplaceAttr.value.split("|") ) ;
+							if ( elAttrSelector ) {
+								el.setAttribute( elAttrSelector, wildcardReplace( updateElementsText, elReplaceAttr.value.split("|") ) ) ;
+							} else {
+								el.innerHTML = wildcardReplace( updateElementsText, elReplaceAttr.value.split("|") ) ;
+							}
 						} else {
-							el.innerHTML = val;
+							if ( elAttrSelector ) {
+								el.setAttribute( elAttrSelector, val );
+							} else {
+								el.innerHTML = val;
+							}
 						}
 					} else {
 						el.attributes[key].value = val;
@@ -85,9 +94,17 @@ Licensed under the MIT license.
 			} else {
 
 				if ( elReplaceAttr ) {
-					el.innerHTML =  wildcardReplace( updateElementsText, elReplaceAttr.value.split("|") ) ;
+					if ( elAttrSelector ) {
+						el.setAttribute (elAttrSelector, wildcardReplace( updateElementsText, elReplaceAttr.value.split("|") ) ) ;
+					} else {
+						el.innerHTML = wildcardReplace( updateElementsText, elReplaceAttr.value.split("|") ) ;
+					}
 				} else {
-					el.innerHTML =  updateElementsText ;
+					if ( elAttrSelector ) {
+						el.setAttribute( elAttrSelector, updateElementsText) ;
+					} else {
+						el.innerHTML = updateElementsText ;
+					}
 				}
 
 			}
