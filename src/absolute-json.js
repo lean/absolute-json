@@ -17,7 +17,7 @@ Licensed under the MIT license.
   var abjson = {};
 
   // helpers
-  function abjError(name, message) {
+  function abjError ( name, message ) {
     this.name = name;
     this.message = message || "error";
   }
@@ -25,21 +25,21 @@ Licensed under the MIT license.
   abjError.prototype = new Error();
   abjError.prototype.constructor = abjError;
 
-  function forEach(obj, iterator, context) {
-    if (!obj) {
+  function forEach (obj, iterator, context) {
+    if (!obj){
       return;
     }
     if (Array.prototype.forEach && obj.forEach === Array.prototype.forEach) {
       obj.forEach(iterator, context);
     } else if (obj.length === +obj.length) {
       for (var i = 0, l = obj.length; i < l; i++) {
-        if (iterator.call(context, obj[i], i, obj) === {}) {
+        if (iterator.call(context, obj[i], i, obj) === {}){
           return;
         }
       }
     } else {
       for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
+        if ( obj.hasOwnProperty(key) ) {
           if (iterator.call(context, obj[key], key, obj) === {}) {
             return;
           }
@@ -49,22 +49,22 @@ Licensed under the MIT license.
 
   }
 
-  function setSource(source) {
+  function setSource ( source ) {
     options.source = source;
   }
 
-  function get(key) {
+  function get ( key ) {
     return options.source[key] ?
-    wildcardReplace(options.source[key], Array.prototype.slice.call(arguments, 1)) :
-    undefined;
+            wildcardReplace(options.source[key], Array.prototype.slice.call(arguments, 1)) :
+            undefined;
   }
 
   function updateElements(el) {
 
     var elKey = el.attributes["data-abjson"].value,
-    elReplaceAttr = el.attributes["data-abjson-r"],
-    elAttrSelector = el.attributes["data-abjson-attr"],
-    updateElementsText = options.source[elKey];
+        elReplaceAttr = el.attributes["data-abjson-r"],
+        elAttrSelector = el.attributes["data-abjson-attr"],
+        updateElementsText = options.source[elKey];
 
     if (typeof updateElementsText !== "undefined") {
 
@@ -75,9 +75,9 @@ Licensed under the MIT license.
           if (key === "text") {
             if (elReplaceAttr) {
               if (elAttrSelector) {
-                el.setAttribute(elAttrSelector, wildcardReplace(updateElementsText, elReplaceAttr.value.split("|"))) ;
+                el.setAttribute(elAttrSelector, wildcardReplace(updateElementsText, elReplaceAttr.value.split("|")));
               } else {
-                el.innerHTML = wildcardReplace(updateElementsText, elReplaceAttr.value.split("|")) ;
+                el.innerHTML = wildcardReplace(updateElementsText, elReplaceAttr.value.split("|"));
               }
             } else {
               if (elAttrSelector) {
@@ -95,15 +95,15 @@ Licensed under the MIT license.
 
         if (elReplaceAttr) {
           if (elAttrSelector) {
-            el.setAttribute (elAttrSelector, wildcardReplace(updateElementsText, elReplaceAttr.value.split("|"))) ;
+            el.setAttribute(elAttrSelector, wildcardReplace(updateElementsText, elReplaceAttr.value.split("|")));
           } else {
-            el.innerHTML = wildcardReplace(updateElementsText, elReplaceAttr.value.split("|")) ;
+            el.innerHTML = wildcardReplace(updateElementsText, elReplaceAttr.value.split("|"));
           }
         } else {
           if (elAttrSelector) {
-            el.setAttribute(elAttrSelector, updateElementsText) ;
+            el.setAttribute(elAttrSelector, updateElementsText);
           } else {
-            el.innerHTML = updateElementsText ;
+            el.innerHTML = updateElementsText;
           }
         }
 
@@ -116,29 +116,27 @@ Licensed under the MIT license.
 
   }
 
-  function wildcardReplace(text, replaceElements) {
+  function wildcardReplace ( text, replaceElements ) {
 
     var i,
-    replacedText = text,
-    replaceElementsLength = replaceElements.length;
+      replacedText = text,
+      replaceElementsLength = replaceElements.length;
 
-    for (i = 0; i < replaceElementsLength; i++) {
-      replacedText = replacedText.replace(new RegExp("%" + (i + 1), "ig"), replaceElements[i]);
+    for( i=0; i < replaceElementsLength; i++ ) {
+      replacedText = replacedText.replace( new RegExp("%" + (i+1), "ig"), replaceElements[i] );
     }
 
     return replacedText;
 
   }
 
-  function findElements(el, opt) {
+  function findElements(el, opt){
     var elements = [];
 
-    if (!el) {
-      el = document;
-    }
+    if (!el) {el = document;}
     elements =  Array.prototype.slice.call(el.querySelectorAll("[data-abjson]"));
-    forEach(elements, function (v) {
-      updateElements(v, opt);
+    forEach( elements, function (v) {
+      updateElements( v, opt );
     });
   }
 
