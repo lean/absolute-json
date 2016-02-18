@@ -1,6 +1,6 @@
 /*
 absolute-json-improved-templating
-version 0.1
+version 0.2
 author: Martin Toledo Do Pazo
 https://github.com/dreadloop/absolute-json
 a fork of:
@@ -119,11 +119,22 @@ Licensed under the MIT license.
       undefined;
   }
 
+  function buildWriter (element, attribute) {
+    return function (value) {
+      if(attribute === 'html' || !attribute){
+        element.html(value);
+      } else {
+        element.attr('attribute', value);
+      }
+    }
+  }
 
 	function updateElements ( el, opt ) {
 
 		var elKey = el.attr( "data-abjson" ),
-			updateElementsdText = get( elKey );
+      elAttrKey = el.attr( "data-abjson-attr" ),
+			updateElementsdText = get( elKey ),
+      writer = buildWriter(el, elAttrKey);
 
 		if ( typeof updateElementsdText !== "undefined" ) {
 
@@ -134,9 +145,9 @@ Licensed under the MIT license.
 					if ( key === "text" ){
 
 						if ( el.attr( "data-abjson-r" ) ) {
-							el.html( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
+							writer( wildcardReplace( updateElementsdText, el.attr( "data-abjson-r" ).split("|") ) );
 						} else {
-							el.html( val );
+							writer( val );
 						}
 
 					} else {
